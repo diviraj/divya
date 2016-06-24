@@ -1,31 +1,24 @@
-#include<stdio.h>
-int ArraySum(int arr[], int n, int sum)
+#include<iostream>
+using namespace std;
+ int maxSubArraySum(int a[], int size)
 {
-    int curr_sum, i, j;
-    for (i = 0; i < n; i++)
-    {
-        curr_sum = arr[i];
-        for (j = i+1; j <= n; j++)
-        {
-            if (curr_sum == sum)
-            {
-                printf ("Sum found between indexes %d and %d", i, j-1);
-                return 1;
-            }
-            if (curr_sum > sum || j == n)
-                break;
-           curr_sum = curr_sum + arr[j];
-        }
-    }
+    int max_so_far = 0, max_ending_here = 0;
  
-    printf("No subarray found");
-    return 0;
+    for (int i = 0; i < size; i++)
+    {
+        max_ending_here = max_ending_here + a[i];
+        if (max_ending_here < 0)
+            max_ending_here = 0;
+        if (max_so_far < max_ending_here)
+            max_so_far = max_ending_here;
+    }
+    return max_so_far;
 }
 int main()
 {
-    int arr[] = {15, 2, 4, 8, 9, 5, 10, 23};
-    int n = sizeof(arr)/sizeof(arr[0]);
-    int sum = 23;
-    ArraySum(arr, n, sum);
+    int a[] = {-2, -3, 4, -1, -2, 1, 5, -3};
+    int n = sizeof(a)/sizeof(a[0]);
+    int max_sum = maxSubArraySum(a, n);
+    cout << "Maximum contiguous sum is \n" << max_sum;
     return 0;
 }
